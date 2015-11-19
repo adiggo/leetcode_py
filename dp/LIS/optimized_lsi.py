@@ -22,7 +22,7 @@ def LIS(arr):
         elif i < helper[0]:
             helper[0] = i
         else:
-            ceil_index = get_ceil_index_bst(arr, 0, len(helper)-1, i)
+            ceil_index = get_ceil_index_bst(helper, 0, len(helper)-1, i)
             helper[ceil_index] = i
-        return len(helper)
+    return len(helper)
 
