@@ -45,3 +45,22 @@ class Solution(object):
             if cur_level:
                 res.append(cur_level)
         return res
+
+
+    def levelOrderDfs(self, root):
+        res = []
+        if not root:
+            return res
+        self.dfs(root, res, 0)
+        return res
+        
+    def dfs(self, root, res, level):
+        if not root:
+            return
+        if level < len(res):
+            res[level].append(root.val)
+        else:
+            # only works for the most left node in each level
+            res.append([root.val])
+        self.dfs(root.left, res, level+1)
+        self.dfs(root.right, res, level+1)
