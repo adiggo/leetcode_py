@@ -1,4 +1,5 @@
 class Solution(object):
+    # better approach, just use two var to record upper and left value
     def uniquePaths(self, m, n):
         """
         :type m: int
