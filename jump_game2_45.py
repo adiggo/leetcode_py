@@ -17,5 +17,20 @@ class Solution(object):
                 break
         return steps[-1]
 
-
-
+    # optimized approach
+    def jumpi2(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        res, last, cur = 0, 0, 0
+        for i in range(len(nums)):
+            if i > last:
+                if last == cur and last < len(nums)-1:
+                    return -1
+                last = cur
+                res += 1
+            cur = max(nums[i]+i, cur)
+        return res
