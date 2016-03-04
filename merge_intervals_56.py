@@ -6,7 +6,8 @@ class Solution(object):
         """
         if not intervals:
             return []
-        intervals = sorted(intervals)
+        #intervals = sorted(intervals)
+        intervals.sort(key = lambda x:x.start)
         res = []
         res.append(Interval(intervals[0].start, intervals[0].end))
         for i in range(1, len(intervals)):

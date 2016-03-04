@@ -18,7 +18,6 @@ class Solution:
         for i in range(1, size):
             diff = prices[i] - prices[i-1]
             for j in range(k , 0 , -1):
-                # if j is even, then we sell stock, if it is odd, then we buy stock
                 l[j] = max(l[j] + diff, g[j-1])
                 g[j] = max(g[j], l[j])
         return g[k]
@@ -31,3 +30,17 @@ class Solution:
                 sum += prices[x + 1] - prices[x]
         return sum
 
+
+    def maxProfit(self, k, prices):
+        size = len(prices)
+        if k > size / 2:
+            return self.get_max_profit(size, prices)
+        l = [[0]* (k+1)] *size
+        g = [[0]* (k+1)] *size
+
+        for i in range(1, size):
+            diff = prices[i] - prices[i-1]
+            for j in range(1, k+1):
+                l[i][j] = max(l[i-1][j] + diff, g[i-1][j-1])
+                g[i][j] = max(l[i][j], g[i-1][j])
+        return g[size-1][k]
