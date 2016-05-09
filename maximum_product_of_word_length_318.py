@@ -27,5 +27,60 @@ class Solution(object):
         return res
 
 
+# 2nd leetcode
+
+class Solution2(object):
+    def maxProduct(self, words):
+        """
+        :type words: List[str]
+        :rtype: int
+        """
+        # the idea use indexes to record the indexes that does not have the chars current word have
+        
+        res = 0
+        # map character to a set of words indexes that have the char
+        char_word = dict()
+        l = len(words)
+        for i in xrange(l):
+            word = words[i]
+            index = set(range(i))
+            for c in word:
+                if c in char_word:
+                    # duplicated char
+                    if i in char_word[c]:
+                        continue
+                    char_word[c].add(i)
+                    if index:
+                        index = index - char_word[c]
+                else:
+                    char_word[c] = set()
+                    char_word[c].add(i)
+            maxLen = 0
+            for j in index:
+                maxLen = max(len(words[j]), maxLen)
+            res = max(maxLen * len(word), res)
+        return res
 
 
+# bit manipulation
+class Solution3(object):
+    def maxProduct(self, words):
+        """
+        :type words: List[str]
+        :rtype: int
+        """
+
+        # since the char only has 26, use bit manipulation        
+        res = 0
+        l = len(words)
+        elements = [0] * l
+        for i in xrange(l):
+            word = words[i]
+            for c in word:
+                elements[i] |= 1 << (ord(c)-ord('a'))
+        
+        for i in xrange(len(elements)):
+            for j in xrange(i+1, len(elements)):
+                if not (elements[i] & elements[j]):
+                    res = max(len(words[i]) * len(words[j]), res)
+        return res
