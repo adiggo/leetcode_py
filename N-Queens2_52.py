@@ -52,3 +52,40 @@ class Solution(object):
             if combination[i-k][j+k] == 'Q':
                 return False
         return True
+
+
+
+#optimized version
+class Solution(object):
+    def __init__(self):
+        self.num = 0
+    def totalNQueens(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        combination = [-1] * n
+        self.dfs(combination, 0, n, 0)
+        return self.num
+    
+    def dfs(self, combination, i, n, number):
+        if i == n:
+            # number is the 
+            if number == n:
+                self.num += 1
+            return
+        # k is the column index
+        for k in xrange(n):
+            valid = self.isValid(combination, i, k)
+            if valid:
+                combination[i] = k
+            else:
+                continue
+            self.dfs(combination, i+1, n, number+1)
+            combination[i] = -1
+    # k means the column which we will choose
+    def isValid(self, dp, i, k):
+        for j in xrange(i):
+            if dp[j] == k or abs(i - j) == abs(k - dp[j]):
+                return False
+        return True
