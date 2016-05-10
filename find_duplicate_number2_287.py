@@ -39,3 +39,26 @@ class Solution2(object):
             if b > a:
                 res += bit
         return res
+
+
+class Solution3(object):
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # start, end = 1, n (since n+1 numbers)
+        start, end = 1, len(nums)-1
+        # should not have equal, since the base case is dup number
+        while start < end:
+            mid = start + (end - start)/2
+            count = 0
+            for n in nums:
+                if n <= mid:
+                    count += 1
+            if count > mid:
+                end = mid
+            else:
+                # if the count <= mid, means the dup number must be in right half
+                start = mid + 1
+        return start
