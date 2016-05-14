@@ -47,3 +47,22 @@ class Solution(object):
 
 
 
+
+
+# second round
+class SolutionOptimized(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        max_sum = None
+        cur_sum = 0
+        for i, v in enumerate(nums):
+            cur_sum = cur_sum + v
+            max_sum = max(max_sum, cur_sum)
+            if cur_sum < 0:
+                cur_sum = 0
+        return max_sum
