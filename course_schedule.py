@@ -37,3 +37,48 @@ def init_adj(prerequisites):
             list.append(tmp[0])
             dict[tmp[1]] = list
     return dict
+
+
+
+# second round
+# compare this problem with graph valid tree
+class Solution:
+    # @param {integer} numCourses
+    # @param {integer[][]} prerequisites
+    # @return {boolean}
+    def canFinish(self, numCourses, prerequisites):
+        #dfs
+        if not prerequisites or len(prerequisites) == 0:
+            return True
+        visited = [0] * numCourses
+        adj = self.init_adj(prerequisites)
+        for course in adj:
+            if visited[course] == 0:
+                if self.has_cycle(adj, course, visited):
+                    continue
+                else:
+                    return False
+        return True
+
+    def has_cycle(self, adj, course, visited):
+        # set color as gray
+        visited[course] = 1
+        children = adj.get(course)
+        if children:
+            for next_course in children:
+                if visited[next_course] == 1:
+                    return False
+                if visited[next_course] == 0 and not self.has_cycle(adj, next_course, visited):
+                    return False
+        visited[course] = 2
+        return True
+        
+    def init_adj(self, prerequisites):
+        adj = dict()
+        for courses in prerequisites:
+            if courses[1] in adj:
+                adj.get(courses[1]).append(courses[0])
+            else:
+                adj[courses[1]] = [courses[0]]
+        return adj
+
