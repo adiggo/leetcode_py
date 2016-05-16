@@ -60,3 +60,27 @@ class Solution(object):
                 matrix[i+l][i+l-j] =  matrix[i+j][i+l]
                 matrix[i+j][i+l] = tmp
 
+
+# second round. from outward to inward. 
+class Solution2(object):
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        start, end = 0, len(matrix) - 1
+        # in place
+        # for 1 x 1, no need to rotate
+        while start < end:
+            for i in xrange(start, end):
+                # do it in anti clockwise, so we only need to copy the data once
+                tmp = matrix[start][i]
+                offset = i - start
+                matrix[start][i] = matrix[end - offset][start]
+                matrix[end - offset][start] = matrix[end][end - offset]
+                matrix[end][end - offset] = matrix[i][end]
+                matrix[i][end] = tmp
+            start += 1
+            end -= 1
+
+
