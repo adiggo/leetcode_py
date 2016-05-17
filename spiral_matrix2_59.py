@@ -17,3 +17,33 @@ class Solution(object):
         if n % 2 == 1:
             res[n/2][n/2] = n**2 
         return res
+
+# second round
+class Solution2(object):
+    def generateMatrix(self, n):
+        """
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        res = [[0 for x in range(n)] for x in range(n)]
+        v = 1
+        start, end = 0, n-1
+        while start <= end:
+            if start == end:
+                res[start][end] = n ** 2
+                break
+            for i in xrange(start, end):
+                res[start][i] = v
+                v += 1
+            for i in xrange(start, end):
+                res[i][end] = v
+                v += 1
+            for i in xrange(start, end):
+                res[end][end - i + start] = v
+                v += 1
+            for i in xrange(start, end):
+                res[end - i+ start][start] = v
+                v += 1
+            end -= 1
+            start += 1
+        return res
