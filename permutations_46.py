@@ -42,3 +42,32 @@ class Solution(object):
             self.dfs2(res, cur, nums, used)
             used[j] = False
             cur.pop()
+
+
+
+
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        visited = [False] * len(nums)
+        res = []
+        self.dfs(nums, visited, [], res)
+        return res
+        
+    def dfs(self, nums, visited, curList, res):
+        if len(curList) == len(nums):
+            res.append(list(curList))
+            return
+        
+        for i in xrange(len(nums)):
+            if not visited[i]:
+                curList.append(nums[i])
+                visited[i] = True
+                self.dfs(nums, visited, curList, res)
+                visited[i] = False
+                curList.pop()
+        
+                
