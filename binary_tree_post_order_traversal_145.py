@@ -19,3 +19,41 @@ class Solution(object):
             if node.right:
                 stack1.append(node.right)
         return res
+
+
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+
+# second round --> need to try morris traversal on post order laster..
+class Solution(object):
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        # use two stacks
+        res = []
+        stack1 = []
+        stack2 = []
+        if not root:
+            return res
+        stack1.append(root)
+        
+        while stack1:
+            cur = stack1.pop()
+            stack2.append(cur)
+            if cur.left:
+                stack1.append(cur.left)
+            
+            if cur.right:
+                stack1.append(cur.right)
+        
+        while stack2:
+            res.append(stack2.pop().val)
+        return res
