@@ -36,3 +36,18 @@ class Solution2(object):
             for j in range(len(res)-1, -1, -1):
                 res.append(res[j] + (1 << i))
         return res
+
+# second round
+# reverse the list each iteration: pattern searching
+class Solution2(object):
+    def grayCode(self, n):
+        """
+        :type n: int
+        :rtype: List[int]
+        """
+        cur = [0, 1]
+        for i in xrange(2, n+1):
+            appender = (1 << (i-1))
+            for j in reversed(cur):
+                cur.append(appender + j)
+        return cur if n >= 1 else [0]
