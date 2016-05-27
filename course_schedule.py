@@ -122,3 +122,50 @@ class Solution:
                 adj[courses[1]] = [courses[0]]
             degree[courses[0]] += 1
         return adj, degree
+
+
+
+# topological sort
+class Solution3:
+    # @param {integer} numCourses
+    # @param {integer[][]} prerequisites
+    # @return {boolean}
+    def canFinish(self, numCourses, prerequisites):
+        #dfs
+        if not prerequisites or len(prerequisites) == 0:
+            return True
+        visited = [0] * numCourses
+        adj = self.init_adj(prerequisites)
+        for course in adj:
+            if visited[course] == 0:
+                if not self.detect_cycle(adj, course, visited):
+                    continue
+                else:
+                    return False
+        return True
+
+
+    def detect_cycle(self, adj, course, visited):
+        '''
+        @return True if there is a cycle, False if there isn't a cycle
+        '''
+        # set color as gray
+        visited[course] = 1
+        children = adj.get(course)
+        if children:
+            for next_course in children:
+                if visited[next_course] == 1:
+                    return True
+                if visited[next_course] == 0 and self.detect_cycle(adj, next_course, visited):
+                    return True
+        visited[course] = 2
+        return False
+        
+    def init_adj(self, prerequisites):
+        adj = dict()
+        for courses in prerequisites:
+            if courses[1] in adj:
+                adj.get(courses[1]).append(courses[0])
+            else:
+                adj[courses[1]] = [courses[0]]
+        return adj
