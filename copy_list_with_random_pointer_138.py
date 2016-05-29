@@ -34,3 +34,27 @@ class Solution(object):
         if grandom:
             prev.random = helper[grandom] if grandom in helper else RandomListNode(grandom.label)
         return dummyNode
+
+# second round
+class Solution(object):
+    def copyRandomList(self, head):
+        """
+        :type head: RandomListNode
+        :rtype: RandomListNode
+        """
+        if not head:
+            return None
+        map = dict()
+        dummy = RandomListNode(-1)
+        prev = dummy
+        while head:
+            if head not in map:
+                map[head] = RandomListNode(head.label)
+            tmp = map.get(head)
+            if head.random not in map:
+                map[head.random] = RandomListNode(head.random.label) if head.random else None
+            tmp.random = map.get(head.random)
+            prev.next = tmp
+            prev = tmp
+            head = head.next
+        return dummy.next
