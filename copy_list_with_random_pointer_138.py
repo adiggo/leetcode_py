@@ -58,3 +58,51 @@ class Solution(object):
             prev = tmp
             head = head.next
         return dummy.next
+
+
+
+# Definition for singly-linked list with a random pointer.
+# class RandomListNode(object):
+#     def __init__(self, x):
+#         self.label = x
+#         self.next = None
+#         self.random = None
+
+
+# O(1) solution
+class Solution(object):
+    def copyRandomList(self, head):
+        """
+        :type head: RandomListNode
+        :rtype: RandomListNode
+        """
+        if not head:
+            return None
+        # insert the deep copied data into the list
+        cur = head
+        while cur:
+            nextNode = cur.next
+            cur.next = RandomListNode(cur.label)
+            cur.next.next = nextNode
+            cur = nextNode
+        
+        # connecting random node
+        cur = head
+        while cur:
+            nextNode = cur.next.next
+            cur.next.random = cur.random.next if cur.random else None
+            cur = nextNode
+        
+        # extract new linked list
+        cur = head
+        dummy = RandomListNode(-1)
+        prev = dummy
+        while cur:
+            prev.next = cur.next
+            cur.next = cur.next.next
+            cur = cur.next
+            prev = prev.next
+        return dummy.next
+        
+        
+        
