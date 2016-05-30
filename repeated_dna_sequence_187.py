@@ -34,6 +34,33 @@ class Solution2(object):
         helper = dict()
         res = []
         for i in xrange(len(s)):
+            sum = (sum * 4 +  map[s[i]]) & 0xFFFFF
+            if i < 9:
+                continue
+            helper[sum] = helper.get(sum, 0) + 1
+            if helper.get(sum) == 2:
+                res.append(s[i-9: i+1])
+        return res
+
+# second round
+class Solution3(object):
+    def findRepeatedDnaSequences(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        if not s or len(s) <= 10:
+            return []
+        map = {'A' : 0, 'C' : 1, 'G': 2, 'T' : 3}
+        sum = 0
+        helper = dict()
+        res = []
+        base = 4 ** 9
+        prev = 0
+        for i in xrange(len(s)):
+            if i >= 9:
+                sum -= prev * base
+                prev = map[s[i-9]]
             sum = (sum * 4 +  map[s[i]])
             if i < 9:
                 continue
@@ -42,3 +69,4 @@ class Solution2(object):
                 res.append(s[i-9: i+1])
         return res
             
+        
