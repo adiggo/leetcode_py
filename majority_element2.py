@@ -24,6 +24,8 @@ class Solution:
 
 
 # second round
+
+# follow up: if looking for n/k elements, then we need O(nk) running time
 class Solution2(object):
     def majorityElement(self, nums):
         """
