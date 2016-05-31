@@ -62,4 +62,38 @@ class Solution2(object):
                 else:
                     prev_interval.end = cur_interval.end
         return res
-                
+               
+
+# third round
+
+# Definition for an interval.
+# class Interval(object):
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution(object):
+    def merge(self, intervals):
+        """
+        :type intervals: List[Interval]
+        :rtype: List[Interval]
+        """
+        if not intervals:
+            return []
+        def cmp(interval1, interval2):
+            if interval1.start == interval2.start:
+                return interval1.end - interval2.end
+            return interval1.start - interval2.start
+            
+        intervals.sort(cmp)
+        res = []
+        for interval in intervals:
+            if not res:
+                res.append(interval)
+            else:
+                if res[-1].end >= interval.start:
+                    res[-1].end = max(interval.end, res[-1].end)
+                else:
+                    res.append(interval)
+        return res
+        
